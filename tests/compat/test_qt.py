@@ -20,7 +20,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 PYTHON_ROOT = str(ROOT / "python")
-QT_BINDINGS = ("PySide2", "PySide6", "PyQt5", "PyQt6")
+QT_BINDINGS = ("PySide2", "PyQt5", "PySide6", "PyQt6")
 
 
 # =============================================================================
@@ -107,6 +107,22 @@ def test_prefers_pyside2_for_houdini_21_0_631(monkeypatch, isolated_qt_imports):
     qt = _import_qt()
 
     assert qt.QT_BINDING == "PySide2"
+    assert qt.QtCore is binding.QtCore
+    assert qt.QtGui is binding.QtGui
+    assert qt.QtWidgets is binding.QtWidgets
+    assert qt.Signal is binding.QtCore.Signal
+    assert qt.Slot is binding.QtCore.Slot
+    assert qt.Property is binding.QtCore.Property
+
+
+def test_falls_back_to_pyqt5_before_qt6(monkeypatch, isolated_qt_imports):
+    """Test that Houdini Qt5 bindings are preferred before Qt6 fallbacks."""
+    binding = _install_binding(monkeypatch, "PyQt5")
+    _install_binding(monkeypatch, "PySide6")
+
+    qt = _import_qt()
+
+    assert qt.QT_BINDING == "PyQt5"
     assert qt.QtCore is binding.QtCore
     assert qt.QtGui is binding.QtGui
     assert qt.QtWidgets is binding.QtWidgets

@@ -2,8 +2,8 @@
 
 The toolbox normally runs inside Houdini, so the first choice should be the Qt
 binding shipped with that Houdini build. Houdini 21.0.631 ships Python 3.11 with
-Qt5/PySide2, so PySide2 is the conservative default. PySide6 and PyQt bindings
-are kept as explicit fallback options for standalone tooling and future builds.
+Qt5/PySide2, so Qt5 bindings are the conservative defaults. Qt6 bindings are
+kept as fallback options for standalone tooling and future builds.
 """
 
 # =============================================================================
@@ -18,7 +18,7 @@ from typing import Any, Optional, Tuple
 # GLOBALS
 # =============================================================================
 
-SUPPORTED_BINDINGS = ("PySide2", "PySide6", "PyQt5", "PyQt6")
+SUPPORTED_BINDINGS = ("PySide2", "PyQt5", "PySide6", "PyQt6")
 
 QT_BINDING = ""
 QtCore: Any = None
