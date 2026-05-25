@@ -122,7 +122,12 @@ def test_falls_back_to_pyside2(monkeypatch, isolated_qt_imports):
     qt = _import_qt()
 
     assert qt.QT_BINDING == "PySide2"
+    assert qt.QtCore is binding.QtCore
+    assert qt.QtGui is binding.QtGui
+    assert qt.QtWidgets is binding.QtWidgets
     assert qt.Signal is binding.QtCore.Signal
+    assert qt.Slot is binding.QtCore.Slot
+    assert qt.Property is binding.QtCore.Property
 
 
 def test_pyqt6_aliases_signal_slot_and_property(monkeypatch, isolated_qt_imports):

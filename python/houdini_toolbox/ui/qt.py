@@ -231,8 +231,8 @@ def _import_binding(binding_name: str) -> Tuple[Any, Any, Any, Any, Any, Any]:
 
     elif binding_name == "PySide2":
         from PySide2 import QtCore as qt_core
-        from houdini_toolbox.ui.qt import QtGui as qt_gui
-        from houdini_toolbox.ui.qt import QtWidgets as qt_widgets
+        from PySide2 import QtGui as qt_gui
+        from PySide2 import QtWidgets as qt_widgets
 
         signal = qt_core.Signal
         slot = qt_core.Slot
