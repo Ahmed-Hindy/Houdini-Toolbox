@@ -14,7 +14,6 @@ from typing import List, Tuple
 from houdini_toolbox.ui import nodegraph, paste
 
 # Houdini
-import nodegraphdisplay
 from canvaseventtypes import KeyboardEvent
 
 # ==============================================================================
@@ -49,10 +48,10 @@ def createEventHandler(  # pylint: disable=invalid-name,unused-argument
         eventtype = uievent.eventtype
         key = uievent.key
 
-        if nodegraphdisplay.setKeyPrompt(editor, key, "h.tool:copy_items", eventtype):
+        if nodegraph.match_key_prompt(editor, key, "h.tool:copy_items", eventtype):
             return paste.copy_items_from_graph(editor)
 
-        if nodegraphdisplay.setKeyPrompt(editor, key, "h.tool:paste_items", eventtype):
+        if nodegraph.match_key_prompt(editor, key, "h.tool:paste_items", eventtype):
             return paste.paste_items_to_graph(eventtype, editor, uievent)
 
     return None, False

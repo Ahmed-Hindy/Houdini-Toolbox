@@ -4,6 +4,9 @@
 # IMPORTS
 # ==============================================================================
 
+# Third Party
+import pytest
+
 # Houdini Toolbox
 import houdini_toolbox.ui.nodegraph
 
@@ -135,12 +138,61 @@ class Test_handle_houdini_paste_event:
 def test_is_houdini_paste_event(mocker):
     """Test houdini_toolbox.ui.nodegraph.is_houdini_paste_event."""
     mock_event = mocker.MagicMock()
-    mock_set = mocker.patch("houdini_toolbox.ui.nodegraph.setKeyPrompt")
+    mock_match = mocker.patch("houdini_toolbox.ui.nodegraph.match_key_prompt")
 
     result = houdini_toolbox.ui.nodegraph.is_houdini_paste_event(mock_event)
 
-    assert result == mock_set.return_value
+    assert result == mock_match.return_value
 
-    mock_set.assert_called_with(
+    mock_match.assert_called_with(
         mock_event.editor, mock_event.key, "h.paste", mock_event.eventtype
     )
+
+
+def test_match_key_prompt_uses_eventtype_when_supported(mocker):
+    """Test matching a key prompt with the older four-argument API."""
+    mock_set = mocker.patch(
+        "houdini_toolbox.ui.nodegraph.setKeyPrompt", return_value=True
+    )
+
+    result = houdini_toolbox.ui.nodegraph.match_key_prompt(
+        "editor", "key", "h.paste", "keyhit"
+    )
+
+    assert result is True
+    mock_set.assert_called_once_with("editor", "key", "h.paste", "keyhit")
+
+
+def test_match_key_prompt_falls_back_to_houdini_21_signature(mocker):
+    """Test matching a key prompt with Houdini 21.0.631's three-argument API."""
+    mock_set = mocker.patch(
+        "houdini_toolbox.ui.nodegraph.setKeyPrompt",
+        side_effect=(TypeError("setKeyPrompt() takes 3 positional arguments"), True),
+    )
+
+    result = houdini_toolbox.ui.nodegraph.match_key_prompt(
+        "editor", "key", "h.paste", "keyhit"
+    )
+
+    assert result is True
+    mock_set.assert_has_calls(
+        [
+            mocker.call("editor", "key", "h.paste", "keyhit"),
+            mocker.call("editor", "key", "h.paste"),
+        ]
+    )
+
+
+def test_match_key_prompt_reraises_other_type_errors(mocker):
+    """Test that unrelated TypeError exceptions are not hidden."""
+    mock_set = mocker.patch(
+        "houdini_toolbox.ui.nodegraph.setKeyPrompt",
+        side_effect=TypeError("internal prompt error"),
+    )
+
+    with pytest.raises(TypeError, match="internal prompt error"):
+        houdini_toolbox.ui.nodegraph.match_key_prompt(
+            "editor", "key", "h.paste", "keyhit"
+        )
+
+    mock_set.assert_called_once_with("editor", "key", "h.paste", "keyhit")

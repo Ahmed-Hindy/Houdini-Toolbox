@@ -56,7 +56,9 @@ class Test_createEventHandler:
         mock_is = mocker.patch(
             "houdini_toolbox.ui.nodegraph.is_houdini_paste_event", return_value=False
         )
-        mock_set = mocker.patch("nodegraphdisplay.setKeyPrompt", return_value=True)
+        mock_match = mocker.patch(
+            "houdini_toolbox.ui.nodegraph.match_key_prompt", return_value=True
+        )
         mock_copy = mocker.patch("houdini_toolbox.ui.paste.copy_items_from_graph")
 
         mock_event = mocker.MagicMock(spec=KeyboardEvent)
@@ -69,7 +71,7 @@ class Test_createEventHandler:
         assert result == mock_copy.return_value
 
         mock_is.assert_called_with(mock_event)
-        mock_set.assert_called_with(
+        mock_match.assert_called_with(
             mock_event.editor, mock_event.key, "h.tool:copy_items", mock_event.eventtype
         )
         mock_copy.assert_called_with(mock_event.editor)
@@ -79,8 +81,8 @@ class Test_createEventHandler:
         mock_is = mocker.patch(
             "houdini_toolbox.ui.nodegraph.is_houdini_paste_event", return_value=False
         )
-        mock_set = mocker.patch(
-            "nodegraphdisplay.setKeyPrompt", side_effect=(False, True)
+        mock_match = mocker.patch(
+            "houdini_toolbox.ui.nodegraph.match_key_prompt", side_effect=(False, True)
         )
         mock_copy = mocker.patch("houdini_toolbox.ui.paste.copy_items_from_graph")
         mock_paste = mocker.patch("houdini_toolbox.ui.paste.paste_items_to_graph")
@@ -95,7 +97,7 @@ class Test_createEventHandler:
         assert result == mock_paste.return_value
 
         mock_is.assert_called_with(mock_event)
-        mock_set.assert_has_calls(
+        mock_match.assert_has_calls(
             [
                 mocker.call(
                     mock_event.editor,
@@ -121,7 +123,9 @@ class Test_createEventHandler:
         mock_is = mocker.patch(
             "houdini_toolbox.ui.nodegraph.is_houdini_paste_event", return_value=False
         )
-        mock_set = mocker.patch("nodegraphdisplay.setKeyPrompt", return_value=False)
+        mock_match = mocker.patch(
+            "houdini_toolbox.ui.nodegraph.match_key_prompt", return_value=False
+        )
 
         mock_event = mocker.MagicMock(spec=KeyboardEvent)
         mock_event.eventtype = "keyhit"
@@ -133,7 +137,7 @@ class Test_createEventHandler:
         assert result == (None, False)
 
         mock_is.assert_called_with(mock_event)
-        mock_set.assert_has_calls(
+        mock_match.assert_has_calls(
             [
                 mocker.call(
                     mock_event.editor,
