@@ -11,7 +11,7 @@ from __future__ import annotations
 from typing import List, Optional
 
 # Third Party
-from PySide2 import QtCore, QtWidgets
+from houdini_toolbox.ui.qt import QtCore, QtWidgets
 
 # Houdini Toolbox
 from houdini_toolbox.ui.paste import utils, widgets

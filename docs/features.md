@@ -86,6 +86,7 @@ Primary files:
 - `houdini/NetworkViewMenu.xml`
 - `houdini/MainMenuCommon.xml`
 - `houdini/python3.9libs/nodegraphhooks.py`
+- `houdini/python3.11libs/nodegraphhooks.py`
 - `python/houdini_toolbox/ui/paste/`
 - `python/houdini_toolbox/ui/menus/`
 
@@ -141,6 +142,7 @@ Primary files:
 - `python/houdini_toolbox/events/`
 - `houdini/scripts/`
 - `houdini/python3.9libs/pythonrc.py`
+- `houdini/python3.11libs/pythonrc.py`
 
 Startup imports initialize logging, register event callbacks, load node styles,
 and initialize the AOV manager. Houdini script files then forward scene and node

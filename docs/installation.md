@@ -25,7 +25,7 @@ The repository also contains `package.py` for Rez. The Rez package:
 
 - depends on `houdini`
 - uses CMake as the build system
-- uses PySide2 at build time for Qt resource compilation
+- uses PySide2/PySide6 at build time for Qt resource compilation
 - prepends `python/` to `PYTHONPATH`
 - prepends `houdini/` to `HOUDINI_PATH` outside test runs
 
@@ -33,6 +33,7 @@ The declared variants currently target:
 
 - `houdini-19.5`
 - `houdini-20.0`
+- `houdini-21.0`
 
 ## Build Outputs
 
@@ -67,5 +68,7 @@ relevant to Mantra render workflows. Houdini releases focused on Karma/Solaris
 may still load many UI and Python features, but render-specific behavior should
 be tested carefully.
 
-The repository also uses PySide2 and Houdini Python 3.9 library paths in places,
-which may need updates for newer Houdini versions.
+The repository includes Houdini Python library folders for Python 3.9 and Python
+3.11. The UI imports Qt through `houdini_toolbox.ui.qt`, which prefers PySide6
+for Houdini 21, falls back to PySide2 for older Houdini builds, and can be
+explicitly pointed at PyQt5 or PyQt6 through `HOUDINI_TOOLBOX_QT_BINDING`.

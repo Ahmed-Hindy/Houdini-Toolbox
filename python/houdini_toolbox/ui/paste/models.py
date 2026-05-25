@@ -11,15 +11,13 @@ from __future__ import annotations
 from operator import attrgetter
 from typing import TYPE_CHECKING, Any, List, Optional
 
-# Third Party
-from PySide2 import QtCore
-
 # Houdini Toolbox
+from houdini_toolbox.ui.qt import QtCore
 from houdini_toolbox.ui.paste import utils
 
 if TYPE_CHECKING:
     # pylint: disable=ungrouped-imports
-    from PySide2 import QtWidgets
+    from houdini_toolbox.ui.qt import QtWidgets
 
     from houdini_toolbox.ui.paste.sources import CopyPasteItemSource, CopyPasteSource
 

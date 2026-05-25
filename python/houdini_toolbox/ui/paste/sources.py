@@ -24,7 +24,7 @@ from houdini_toolbox.ui.paste import utils
 import hou
 
 if TYPE_CHECKING:
-    from PySide2 import QtGui
+    from houdini_toolbox.ui.qt import QtGui
 
 # Handle differences between platforms.
 if platform.system() == "Windows":

@@ -5,7 +5,7 @@
 # =============================================================================
 
 # Third Party
-from PySide2 import QtCore, QtGui
+from houdini_toolbox.ui.qt import QtCore, QtGui
 
 # Houdini Toolbox
 import houdini_toolbox.ui.icons  # type: ignore # noqa: F401 # pylint: disable=no-name-in-module,unused-import
