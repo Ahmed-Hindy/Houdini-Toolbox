@@ -23,17 +23,14 @@ requires = [
 
 build_system = "cmake"
 
-build_requires = [
-    "PySide2",  # So we can compile Qt5 resources at build time.
-    "PySide6",  # So we can compile Qt6 resources at build time.
-]
+build_requires = []
 
 plugin_for = ["houdini"]
 
 variants = [
-     ["houdini-19.5"],
-     ["houdini-20.0"],
-     ["houdini-21.0"],
+     ["houdini-19.5", "PySide2"],
+     ["houdini-20.0", "PySide2"],
+     ["houdini-21.0", "PySide2"],
  ]
 
 tests = {

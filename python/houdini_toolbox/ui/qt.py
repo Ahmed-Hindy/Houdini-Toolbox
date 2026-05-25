@@ -1,9 +1,9 @@
 """Qt binding compatibility helpers.
 
 The toolbox normally runs inside Houdini, so the first choice should be the Qt
-binding shipped with that Houdini build. Houdini 21 defaults to Qt6/PySide6,
-while older supported builds may still provide Qt5/PySide2. PyQt bindings are
-kept as explicit fallback options for standalone tooling and tests.
+binding shipped with that Houdini build. Houdini 21.0.631 ships Python 3.11 with
+Qt5/PySide2, so PySide2 is the conservative default. PySide6 and PyQt bindings
+are kept as explicit fallback options for standalone tooling and future builds.
 """
 
 # =============================================================================
@@ -18,7 +18,7 @@ from typing import Any, Optional, Tuple
 # GLOBALS
 # =============================================================================
 
-SUPPORTED_BINDINGS = ("PySide6", "PySide2", "PyQt6", "PyQt5")
+SUPPORTED_BINDINGS = ("PySide2", "PySide6", "PyQt5", "PyQt6")
 
 QT_BINDING = ""
 QtCore: Any = None

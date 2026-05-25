@@ -69,6 +69,7 @@ may still load many UI and Python features, but render-specific behavior should
 be tested carefully.
 
 The repository includes Houdini Python library folders for Python 3.9 and Python
-3.11. The UI imports Qt through `houdini_toolbox.ui.qt`, which prefers PySide6
-for Houdini 21, falls back to PySide2 for older Houdini builds, and can be
-explicitly pointed at PyQt5 or PyQt6 through `HOUDINI_TOOLBOX_QT_BINDING`.
+3.11. Houdini 21.0.631 ships Python 3.11 with Qt5/PySide2, so the UI imports Qt
+through `houdini_toolbox.ui.qt` and prefers PySide2 by default. Set
+`HOUDINI_TOOLBOX_QT_BINDING` only when you need an explicit override; supported
+values are `PySide2`, `PySide6`, `PyQt5`, and `PyQt6`.

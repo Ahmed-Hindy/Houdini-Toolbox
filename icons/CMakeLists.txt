@@ -2,18 +2,14 @@
 # location.
 
 # Convert our icons resource file into a Python file via the resource compiler
-# matching the targeted Houdini Qt binding. Houdini 21 uses Qt6/PySide6 by
-# default, while older supported Houdini builds use Qt5/PySide2.
+# matching the targeted Houdini Qt binding. Houdini 21.0.631 uses Qt5/PySide2
+# with Python 3.11, so PySide2 remains the default for supported Houdini builds.
 set(HT_QT_BINDING "$ENV{HOUDINI_TOOLBOX_QT_BINDING}")
 
 if(NOT HT_QT_BINDING)
-    if("$ENV{REZ_HOUDINI_VERSION}" MATCHES "^21\\.")
-        set(HT_QT_BINDING "PySide6")
-    elseif("$ENV{REZ_HOUDINI_VERSION}" MATCHES "^(19|20)\\.")
+    if("$ENV{REZ_HOUDINI_VERSION}" MATCHES "^(19|20|21)\\.")
         set(HT_QT_BINDING "PySide2")
-    elseif("$ENV{HFS}" MATCHES "(^|[^0-9])21[._]")
-        set(HT_QT_BINDING "PySide6")
-    elseif("$ENV{HFS}" MATCHES "(^|[^0-9])(19|20)[._]")
+    elseif("$ENV{HFS}" MATCHES "(^|[^0-9])(19|20|21)[._]")
         set(HT_QT_BINDING "PySide2")
     else()
         set(HT_QT_BINDING "PySide2")

@@ -20,7 +20,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 PYTHON_ROOT = str(ROOT / "python")
-QT_BINDINGS = ("PySide6", "PySide2", "PyQt6", "PyQt5")
+QT_BINDINGS = ("PySide2", "PySide6", "PyQt5", "PyQt6")
 
 
 # =============================================================================
@@ -99,14 +99,14 @@ def _import_qt():
 # =============================================================================
 
 
-def test_prefers_pyside6_for_houdini_21(monkeypatch, isolated_qt_imports):
-    """Test that the default binding order prefers PySide6."""
-    binding = _install_binding(monkeypatch, "PySide6")
-    _install_binding(monkeypatch, "PySide2")
+def test_prefers_pyside2_for_houdini_21_0_631(monkeypatch, isolated_qt_imports):
+    """Test that the default binding order matches Houdini 21.0.631."""
+    binding = _install_binding(monkeypatch, "PySide2")
+    _install_binding(monkeypatch, "PySide6")
 
     qt = _import_qt()
 
-    assert qt.QT_BINDING == "PySide6"
+    assert qt.QT_BINDING == "PySide2"
     assert qt.QtCore is binding.QtCore
     assert qt.QtGui is binding.QtGui
     assert qt.QtWidgets is binding.QtWidgets
@@ -115,13 +115,13 @@ def test_prefers_pyside6_for_houdini_21(monkeypatch, isolated_qt_imports):
     assert qt.Property is binding.QtCore.Property
 
 
-def test_falls_back_to_pyside2(monkeypatch, isolated_qt_imports):
-    """Test compatibility with older Houdini Qt5/PySide2 builds."""
-    binding = _install_binding(monkeypatch, "PySide2")
+def test_falls_back_to_pyside6(monkeypatch, isolated_qt_imports):
+    """Test compatibility with future Houdini Qt6/PySide6 builds."""
+    binding = _install_binding(monkeypatch, "PySide6")
 
     qt = _import_qt()
 
-    assert qt.QT_BINDING == "PySide2"
+    assert qt.QT_BINDING == "PySide6"
     assert qt.QtCore is binding.QtCore
     assert qt.QtGui is binding.QtGui
     assert qt.QtWidgets is binding.QtWidgets
@@ -165,7 +165,7 @@ def test_pyqt5_aliases_signal_slot_and_property(monkeypatch, isolated_qt_imports
 def test_environment_override_wins(monkeypatch, isolated_qt_imports):
     """Test that an explicit binding override takes precedence."""
     monkeypatch.setenv("HOUDINI_TOOLBOX_QT_BINDING", "PyQt5")
-    _install_binding(monkeypatch, "PySide6")
+    _install_binding(monkeypatch, "PySide2")
     binding = _install_binding(monkeypatch, "PyQt5")
 
     qt = _import_qt()

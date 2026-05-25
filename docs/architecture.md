@@ -112,8 +112,8 @@ spaces are both accepted as separators.
 ## UI Systems
 
 The UI layer imports Qt through `houdini_toolbox.ui.qt`. The compatibility layer
-prefers PySide6 for Houdini 21, falls back to PySide2 for older builds, and can
-load PyQt6 or PyQt5 when explicitly requested.
+prefers PySide2 because Houdini 21.0.631 ships Qt5/PySide2, while still allowing
+PySide6, PyQt5, or PyQt6 when explicitly requested.
 
 The AOV Manager UI follows a model/view split:
 

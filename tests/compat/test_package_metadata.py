@@ -38,26 +38,28 @@ def _read_assignment(name):
 # =============================================================================
 
 
-def test_houdini_21_variant_is_declared():
-    """Test that the Rez package advertises Houdini 21.0 support."""
+def test_houdini_21_variant_has_pyside2_requirement():
+    """Test that the Rez package advertises Houdini 21.0 with its Qt binding."""
     variants = _read_assignment("variants")
 
-    assert ["houdini-21.0"] in variants
+    assert ["houdini-21.0", "PySide2"] in variants
 
 
-def test_qt_build_dependencies_allow_houdini_21_qt6():
-    """Test that Qt6 build tooling can be resolved for Houdini 21."""
+def test_pyside_requirements_are_variant_specific():
+    """Test that PySide requirements are not global build requirements."""
     build_requires = _read_assignment("build_requires")
+    variants = _read_assignment("variants")
 
-    assert "PySide6" in build_requires
+    assert "PySide2" not in build_requires
+    assert "PySide6" not in build_requires
+    assert all(any(req.startswith("PySide") for req in variant) for variant in variants)
 
 
-def test_icon_build_can_use_pyside6_resource_compiler():
-    """Test that Qt resource generation can target Qt6 builds."""
+def test_icon_build_supports_all_qt_resource_compilers():
+    """Test that Qt resource generation can target supported bindings."""
     cmake_text = (ROOT / "icons" / "CMakeLists.txt").read_text(encoding="utf-8")
 
     assert "REZ_HOUDINI_VERSION" in cmake_text
-    assert 'set(HT_QT_BINDING "PySide6")' in cmake_text
     assert 'set(HT_QT_BINDING "PySide2")' in cmake_text
     assert "pyside6-rcc" in cmake_text
     assert "pyside2-rcc" in cmake_text
