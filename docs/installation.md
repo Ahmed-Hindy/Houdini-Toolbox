@@ -25,15 +25,15 @@ The repository also contains `package.py` for Rez. The Rez package:
 
 - depends on `houdini`
 - uses CMake as the build system
-- uses PySide2/PySide6 at build time for Qt resource compilation
+- carries PySide requirements on each Houdini variant
 - prepends `python/` to `PYTHONPATH`
 - prepends `houdini/` to `HOUDINI_PATH` outside test runs
 
 The declared variants currently target:
 
-- `houdini-19.5`
-- `houdini-20.0`
-- `houdini-21.0`
+- `houdini-19.5` with `PySide2`
+- `houdini-20.0` with `PySide2`
+- `houdini-21.0` with `PySide2`
 
 ## Build Outputs
 
