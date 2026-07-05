@@ -32,10 +32,10 @@ Python 2.7 compatible code is still available in the **python2.7** branch.
 
 ### Compatibility Notes
 
-The current package variants in `package.py` target Houdini 19.5 and Houdini
-20.0. Some parts of the toolbox are tied to Mantra, SOHO, IFD generation, and
-PySide2-era Houdini UI APIs, so newer Houdini releases may need compatibility
-testing before production use.
+The current package variants in `package.py` target Houdini 19.5, Houdini 20.0,
+and Houdini 21.0. Some parts of the toolbox are tied to Mantra, SOHO, IFD
+generation, and Houdini Qt APIs, so render-specific and UI behavior should be
+tested before production use on newer builds.
 
 ---
 

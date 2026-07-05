@@ -1,9 +1,35 @@
 # Generate a compiled resource file for any icons we are using and install it into the appropriate
 # location.
 
-# Convert our icons resource file into a Python file via pyside2-rcc.
+# Convert our icons resource file into a Python file via the resource compiler
+# matching the targeted Houdini Qt binding. Houdini 21.0.631 uses Qt5/PySide2
+# with Python 3.11, so PySide2 remains the default for supported Houdini builds.
+set(HT_QT_BINDING "$ENV{HOUDINI_TOOLBOX_QT_BINDING}")
+
+if(NOT HT_QT_BINDING)
+    if("$ENV{REZ_HOUDINI_VERSION}" MATCHES "^(19|20|21)\\.")
+        set(HT_QT_BINDING "PySide2")
+    elseif("$ENV{HFS}" MATCHES "(^|[^0-9])(19|20|21)[._]")
+        set(HT_QT_BINDING "PySide2")
+    else()
+        set(HT_QT_BINDING "PySide2")
+    endif()
+endif()
+
+if(HT_QT_BINDING STREQUAL "PySide2")
+    find_program(QT_RCC NAMES pyside2-rcc REQUIRED)
+elseif(HT_QT_BINDING STREQUAL "PySide6")
+    find_program(QT_RCC NAMES pyside6-rcc REQUIRED)
+elseif(HT_QT_BINDING STREQUAL "PyQt5")
+    find_program(QT_RCC NAMES pyrcc5 REQUIRED)
+elseif(HT_QT_BINDING STREQUAL "PyQt6")
+    find_program(QT_RCC NAMES pyrcc6 pyqt6-rcc REQUIRED)
+else()
+    message(FATAL_ERROR "Unsupported Qt binding: ${HT_QT_BINDING}")
+endif()
+
 execute_process(
-    COMMAND pyside2-rcc -o $ENV{REZ_BUILD_PATH}/icons/icons.py ${CMAKE_CURRENT_SOURCE_DIR}/icons.qrc
+    COMMAND ${QT_RCC} -o $ENV{REZ_BUILD_PATH}/icons/icons.py ${CMAKE_CURRENT_SOURCE_DIR}/icons.qrc
     COMMAND_ECHO STDOUT
 )
 

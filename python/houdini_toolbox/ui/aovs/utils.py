@@ -10,7 +10,7 @@ import pickle
 from typing import Any, List, Tuple
 
 # Third Party
-from PySide2 import QtCore, QtGui
+from houdini_toolbox.ui.qt import QtCore, QtGui
 
 # Houdini Toolbox
 from houdini_toolbox.sohohooks.aovs.aov import (

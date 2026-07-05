@@ -12,7 +12,7 @@ import re
 from typing import TYPE_CHECKING, List, Optional, Union
 
 # Third Party
-from PySide2 import QtCore, QtGui, QtWidgets
+from houdini_toolbox.ui.qt import QtCore, QtGui, QtWidgets
 
 # Houdini Toolbox
 import houdini_toolbox.ui.paste

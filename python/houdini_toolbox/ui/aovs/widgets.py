@@ -9,7 +9,7 @@ import os
 import pickle
 
 # Third Party
-from PySide2 import QtCore, QtGui, QtWidgets
+from houdini_toolbox.ui.qt import QtCore, QtGui, QtWidgets
 
 # Houdini Toolbox
 from houdini_toolbox.sohohooks.aovs import manager

@@ -22,6 +22,7 @@
         source =  [
             "houdini_toolbox",
             "houdini/python3.9libs/nodegraphhooks.py",
+            "houdini/python3.11libs/nodegraphhooks.py",
         ]
         omit = [
             "*tests*",
@@ -86,7 +87,12 @@
 [tool.pylint]
 
     [tool.pylint.master]
-        extension-pkg-whitelist = ['PySide2']
+        extension-pkg-whitelist = [
+            'PySide2',
+            'PySide6',
+            'PyQt5',
+            'PyQt6',
+        ]
         ignore=['CVS']
         ignore-patterns=["icons.py"]
         ignored-modules=["houdini_toolbox.nodes._ht_generic_image_badge,_ht_generic_image_badge"]
@@ -127,7 +133,16 @@
         ignore-mixin-members = ['yes']
         ignore-on-opaque-inference = ['yes']
         ignored-classes = ['optparse.Values,thread._local,_thread._local,Signal']
-        ignored-modules = ['PySide2,shiboken2,houdini_toolbox.ui.icons']
+        ignored-modules = [
+            'PySide2',
+            'PySide6',
+            'PyQt5',
+            'PyQt6',
+            'shiboken2',
+            'shiboken6',
+            'sip',
+            'houdini_toolbox.ui.icons',
+        ]
         missing-member-hint = ['yes']
         missing-member-hint-distance = 1
 

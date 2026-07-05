@@ -66,6 +66,29 @@ def handle_houdini_paste_event(uievent: KeyboardEvent) -> Tuple[None, bool]:
     return None, True
 
 
+def match_key_prompt(editor, key, prompt: str, eventtype: str) -> bool:
+    """Check whether a key event matches a Houdini action prompt.
+
+    Args:
+        editor: The network editor receiving the event.
+        key: The event key.
+        prompt: The Houdini action prompt to match.
+        eventtype: The keyboard event type.
+
+    Returns:
+        Whether the key event matches the prompt.
+
+    """
+    try:
+        return setKeyPrompt(editor, key, prompt, eventtype)
+
+    except TypeError as error:
+        if "positional argument" not in str(error):
+            raise
+
+        return setKeyPrompt(editor, key, prompt)
+
+
 def is_houdini_paste_event(uievent: KeyboardEvent) -> bool:
     """Check whether the event is an item paste event.
 
@@ -73,4 +96,4 @@ def is_houdini_paste_event(uievent: KeyboardEvent) -> bool:
     :return: Whether the event is a paste event (h.paste).
 
     """
-    return setKeyPrompt(uievent.editor, uievent.key, "h.paste", uievent.eventtype)
+    return match_key_prompt(uievent.editor, uievent.key, "h.paste", uievent.eventtype)

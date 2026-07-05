@@ -12,7 +12,7 @@ import os
 import re
 
 # Third Party
-from PySide2 import QtCore, QtWidgets
+from houdini_toolbox.ui.qt import QtCore, QtWidgets
 
 # Houdini Toolbox
 from houdini_toolbox.sohohooks.aovs import constants as consts

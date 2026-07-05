@@ -87,16 +87,17 @@ authoritative representation.
 
 Areas most likely to need attention when moving to newer Houdini versions:
 
-- PySide2 API usage
-- `houdini/python3.9libs` path assumptions
+- PySide2/PySide6/PyQt5/PyQt6 compatibility through `houdini_toolbox.ui.qt`
+- `houdini/python3.9libs` and `houdini/python3.11libs` path assumptions
 - Mantra, SOHO, IFD, and PyFilter behavior
 - HDK API changes for compiled SOP/ROP/OPUI plugins
 - CMake/Houdini toolkit changes
 - package variants in `package.py`
 
-For Houdini 21.0 support, start by adding an explicit Rez variant, then test
-package loading, Python startup, AOV Manager UI creation, SOHO/PyFilter render
-paths, and HDK plugin compilation.
+For Houdini 21.0 support, test package loading, Python startup under Python
+3.11, Qt UI imports through `houdini_toolbox.ui.qt` (including binding
+selection), AOV Manager UI creation, SOHO/PyFilter render paths, and HDK plugin
+compilation.
 
 ## Useful Validation Checklist
 

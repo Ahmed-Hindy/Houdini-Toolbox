@@ -17,6 +17,7 @@ Houdini conventions.
 Important startup files include:
 
 - `houdini/python3.9libs/pythonrc.py`
+- `houdini/python3.11libs/pythonrc.py`
 - `houdini/scripts/456.py`
 - `houdini/scripts/beforescenesave.py`
 - `houdini/scripts/afterscenesave.py`
@@ -38,7 +39,7 @@ Major modules:
 - `nodes`: node badges, parameter queries, helpcard generation, and styling.
 - `pyfilter`: Mantra PyFilter manager and operations.
 - `sohohooks`: SOHO hook dispatch and automatic AOV generation.
-- `ui`: PySide2 UI for AOVs, copy/paste, menus, and network graph behavior.
+- `ui`: Qt UI for AOVs, copy/paste, menus, and network graph behavior.
 
 ## Houdini Payload
 
@@ -53,7 +54,8 @@ Key subfolders and files:
 - `otls`: digital assets and expanded HDA content.
 - `pyfilter`: Mantra PyFilter entry point and operation registry.
 - `python_panels`: Python panel definitions.
-- `python3.9libs`: Houdini startup and nodegraph hook modules.
+- `python3.9libs`: Houdini Python 3.9 startup and nodegraph hook modules.
+- `python3.11libs`: Houdini Python 3.11 startup and nodegraph hook modules.
 - `scripts`: scene and node lifecycle script hooks.
 - `soho`: SOHO hook and parameter definition files.
 - `toolbar`: shelf tool definitions.
@@ -109,7 +111,9 @@ spaces are both accepted as separators.
 
 ## UI Systems
 
-The UI layer uses PySide2 through Houdini's Qt environment.
+The UI layer imports Qt through `houdini_toolbox.ui.qt`. The compatibility layer
+prefers PySide2 because Houdini 21.0.631 ships Qt5/PySide2, while still allowing
+PySide6, PyQt5, or PyQt6 when explicitly requested.
 
 The AOV Manager UI follows a model/view split:
 
