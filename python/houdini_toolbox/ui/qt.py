@@ -165,6 +165,11 @@ def _apply_qt6_enum_aliases(qt_core: Any, qt_gui: Any, qt_widgets: Any) -> None:
     )
     _copy_enum_members(
         qt,
+        getattr(qt, "CaseSensitivity", None),
+        ("CaseInsensitive",),
+    )
+    _copy_enum_members(
+        qt,
         getattr(qt, "Orientation", None),
         ("Horizontal",),
     )

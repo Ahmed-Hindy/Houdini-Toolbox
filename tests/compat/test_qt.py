@@ -43,13 +43,13 @@ def isolated_qt_imports(monkeypatch):
 
     real_import = builtins.__import__
 
-    def _import(name, globals=None, locals=None, fromlist=(), level=0):
+    def _import(name, globals_=None, locals_=None, fromlist=(), level=0):
         root_name = name.split(".", 1)[0]
 
         if root_name in QT_BINDINGS and root_name not in sys.modules:
             raise ImportError(root_name)
 
-        return real_import(name, globals, locals, fromlist, level)
+        return real_import(name, globals_, locals_, fromlist, level)
 
     monkeypatch.setattr(builtins, "__import__", _import)
 
@@ -75,6 +75,15 @@ def _install_binding(monkeypatch, name):
         qt_core.pyqtSignal = object()
         qt_core.pyqtSlot = object()
         qt_core.pyqtProperty = object()
+
+    if name in ("PySide6", "PyQt6"):
+        qt_core.Qt = types.SimpleNamespace(
+            CaseSensitivity=types.SimpleNamespace(CaseInsensitive=object()),
+        )
+        qt_gui.QKeySequence = types.SimpleNamespace()
+        qt_widgets.QAbstractItemView = types.SimpleNamespace()
+        qt_widgets.QDialogButtonBox = types.SimpleNamespace()
+        qt_widgets.QSizePolicy = types.SimpleNamespace()
 
     package.QtCore = qt_core
     package.QtGui = qt_gui
@@ -160,6 +169,9 @@ def test_pyqt6_aliases_signal_slot_and_property(monkeypatch, isolated_qt_imports
     assert qt.Signal is binding.QtCore.pyqtSignal
     assert qt.Slot is binding.QtCore.pyqtSlot
     assert qt.Property is binding.QtCore.pyqtProperty
+    assert qt.QtCore.Qt.CaseInsensitive is (
+        binding.QtCore.Qt.CaseSensitivity.CaseInsensitive
+    )
 
 
 def test_pyqt5_aliases_signal_slot_and_property(monkeypatch, isolated_qt_imports):

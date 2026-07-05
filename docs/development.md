@@ -95,8 +95,9 @@ Areas most likely to need attention when moving to newer Houdini versions:
 - package variants in `package.py`
 
 For Houdini 21.0 support, test package loading, Python startup under Python
-3.11, PySide2 UI imports, AOV Manager UI creation, SOHO/PyFilter render paths,
-and HDK plugin compilation.
+3.11, Qt UI imports through `houdini_toolbox.ui.qt` (including binding
+selection), AOV Manager UI creation, SOHO/PyFilter render paths, and HDK plugin
+compilation.
 
 ## Useful Validation Checklist
 
